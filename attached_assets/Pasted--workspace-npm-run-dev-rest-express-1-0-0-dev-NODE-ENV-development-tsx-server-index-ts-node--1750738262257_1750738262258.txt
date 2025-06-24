@@ -1,0 +1,108 @@
+~/workspace$ npm run dev
+
+> rest-express@1.0.0 dev
+> NODE_ENV=development tsx server/index.ts
+
+node:events:496
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: listen EADDRINUSE: address already in use 0.0.0.0:5000
+    at Server.setupListenHandle [as _listen2] (node:net:1908:16)
+    at listenInCluster (node:net:1965:12)
+    at doListen (node:net:2139:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:83:21)
+Emitted 'error' event on Server instance at:
+    at emitErrorNT (node:net:1944:8)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21) {
+  code: 'EADDRINUSE',
+  errno: -98,
+  syscall: 'listen',
+  address: '0.0.0.0',
+  port: 5000
+}
+
+Node.js v20.18.1
+~/workspace$ npx tsc --noEmit
+server/routes.ts:32:76 - error TS2345: Argument of type '([id, session]: [any, any]) => { id: any; session: any; }' is not assignable to parameter of type '(value: unknown, index: number, array: unknown[]) => { id: any; session: any; }'.
+  Types of parameters '__0' and 'value' are incompatible.
+    Type 'unknown' is not assignable to type '[any, any]'.
+
+32       const sessions = Array.from((storage as any).sessions.entries()).map(([id, session]) => ({ id, session }));
+                                                                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+server/services/openai.ts:89:59 - error TS7006: Parameter 'p' implicitly has an 'any' type.
+
+89     console.log('Generated prompts:', result.prompts?.map(p => p.text));
+                                                             ~
+
+server/services/openai.ts:134:62 - error TS7006: Parameter 'p' implicitly has an 'any' type.
+
+134     console.log('Final validated prompts:', validPrompts.map(p => p.text));
+                                                                 ~
+
+server/storage.ts:60:7 - error TS2322: Type '{ [x: number]: string; length: number; toString: () => string; toLocaleString: { (): string; (locales: string | string[], options?: (NumberFormatOptions & DateTimeFormatOptions) | undefined): string; }; ... 37 more ...; readonly [Symbol.unscopables]: { ...; }; }' is not assignable to type 'string[]'.
+  The types returned by 'pop()' are incompatible between these types.
+    Type 'unknown' is not assignable to type 'string | undefined'.
+
+60       descriptors: Array.isArray(insertSession.descriptors) ? insertSession.descriptors : [],
+         ~~~~~~~~~~~
+
+  node_modules/drizzle-orm/utils.d.ts:11:27
+    11 export type Simplify<T> = {
+                                 ~
+    12     [K in keyof T]: T[K];
+       ~~~~~~~~~~~~~~~~~~~~~~~~~
+    13 } & {};
+       ~
+    The expected type comes from property 'descriptors' which is declared here on type '{ id: number; anchor: string; sessionId: string; recipientName: string; occasion: string | null; tone: string | null; aiGeneratedPrompts: { id: string; text: string; icon: string; }[] | null; ingredients: { ...; }[] | null; descriptors: string[] | null; finalMessage: string | null; createdAt: Date | null; updatedAt:...'
+
+server/vite.ts:39:5 - error TS2322: Type '{ middlewareMode: boolean; hmr: { server: Server<typeof IncomingMessage, typeof ServerResponse>; }; allowedHosts: boolean; }' is not assignable to type 'ServerOptions'.
+  Types of property 'allowedHosts' are incompatible.
+    Type 'boolean' is not assignable to type 'true | string[] | undefined'.
+
+39     server: serverOptions,
+       ~~~~~~
+
+
+Found 5 errors in 4 files.
+
+Errors  Files
+     1  server/routes.ts:32
+     2  server/services/openai.ts:89
+     1  server/storage.ts:60
+     1  server/vite.ts:39
+~/workspace$ npm install eslint --save-dev
+npx eslint . 
+
+added 65 packages, and audited 724 packages in 5s
+
+97 packages are looking for funding
+  run `npm fund` for details
+
+21 vulnerabilities (1 low, 7 moderate, 13 high)
+
+To address issues that do not require attention, run:
+  npm audit fix
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+
+Run `npm audit` for details.
+
+Oops! Something went wrong! :(
+
+ESLint: 9.29.0
+
+ESLint couldn't find an eslint.config.(js|mjs|cjs) file.
+
+From ESLint v9.0.0, the default configuration file is now eslint.config.js.
+If you are using a .eslintrc.* file, please follow the migration guide
+to update your configuration file to the new format:
+
+https://eslint.org/docs/latest/use/configure/migration-guide
+
+If you still have problems after following the migration guide, please stop by
+https://eslint.org/chat/help to chat with the team.
+
+~/workspace$ 
